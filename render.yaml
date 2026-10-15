@@ -1,0 +1,44 @@
+services:
+  # FlowPilot AI Backend API Web Service
+  - type: web
+    name: flowpilot-backend
+    runtime: node
+    plan: starter
+    region: oregon
+    buildCommand: npm install && npm run build --workspace=@flowpilot/shared && npm run build --workspace=backend
+    startCommand: node backend/dist/server.js
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CLIENT_URL
+        sync: false
+      - key: API_BASE_URL
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.8-flash
+      - key: SUPABASE_URL
+        value: https://kwmvezaudazdabxhprmg.supabase.co
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: LOG_LEVEL
+        value: info
+      - key: RATE_LIMIT_WINDOW_MS
+        value: "60000"
+      - key: RATE_LIMIT_MAX_REQUESTS
+        value: "100"
+      - key: WORKFLOW_MAX_TASKS
+        value: "25"
+      - key: WORKFLOW_MAX_STEPS
+        value: "50"
+      - key: WORKFLOW_MAX_RETRIES
+        value: "3"
+      - key: WORKFLOW_TASK_TIMEOUT_MS
+        value: "60000"
+      - key: ENABLE_DEMO_MODE
+        value: "true"
