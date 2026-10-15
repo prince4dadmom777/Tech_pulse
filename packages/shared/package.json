@@ -5,12 +5,11 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "prestart": "tsc",
     "dev": "tsc --watch"
   },
   "dependencies": {
+    "typescript": "^5.7.3",
     "zod": "^3.24.1"
-  },
-  "devDependencies": {
-    "typescript": "^5.7.3"
   }
 }
