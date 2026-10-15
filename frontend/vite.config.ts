@@ -10,6 +10,19 @@ export default defineConfig({
       '@flowpilot/shared': path.resolve(__dirname, '../packages/shared/src')
     }
   },
+  build: {
+    chunkSizeWarningLimit: 1200,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-charts': ['recharts'],
+          'vendor-icons': ['lucide-react'],
+          'vendor-query': ['@tanstack/react-query']
+        }
+      }
+    }
+  },
   server: {
     port: 5173,
     proxy: {
