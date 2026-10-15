@@ -45,6 +45,32 @@ export function createApp() {
   app.use('/api/demo', demoRouter);
   app.use('/api/settings', demoRouter);
 
+  // Root welcome / health endpoint (handles GET /)
+  app.get('/', (req, res) => {
+    res.json({
+      service: 'FlowPilot AI Orchestration Engine',
+      version: '1.0.0',
+      status: 'online',
+      message: 'FlowPilot AI Backend is running successfully.',
+      endpoints: {
+        health: '/api/health',
+        ai_status: '/api/settings/ai-status',
+        supabase_status: '/api/settings/supabase-status',
+        workflows: '/api/workflows',
+        dashboard: '/api/dashboard/summary'
+      }
+    });
+  });
+
+  // Descriptive 404 handler for unknown routes
+  app.use((req, res) => {
+    res.status(404).json({
+      error: 'Not Found',
+      message: `Endpoint ${req.method} ${req.originalUrl} does not exist. Available API endpoints start with /api.`,
+      health: '/api/health'
+    });
+  });
+
   // Centralized Error Handler
   app.use(errorHandler);
 
